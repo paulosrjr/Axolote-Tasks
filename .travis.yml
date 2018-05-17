@@ -10,7 +10,7 @@ before_install:
   - cp helpers/key /home/travis/.ssh/key
   - chmod 400 /home/travis/.ssh/key
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements.pip
   - nohup ./run.sh &
 script:
   - pytest test.py
