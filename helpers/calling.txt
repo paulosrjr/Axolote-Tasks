@@ -1,0 +1,57 @@
+from actions.backup_executors.add import add
+result = add.delay(4, 4)
+result.get()
+from actions.backup_executors.scp import Scp
+%history
+task = Scp()
+ka
+ka = {"hello":"1", "world":"2"}
+result = task.apply_async(kwargs=ka)
+result = task.apply_async(actions.backup_executors.scp.Scp, kwargs=ka)
+result = task.apply_async(kwargs=ka)
+history
+task.name = actions.backup_executors.scp.Scp
+task.name = "actions.backup_executors.scp.Scp"
+task.name
+ka = {"hello":"1", "world":"2"}
+result = task.apply_async(kwargs=ka)
+task.name = "actions.backup_executors.rsync.Rsync"
+result = task.apply_async(kwargs=ka)
+history
+
+from actions.backup_executors.scp import Scp
+
+ka = {"hello":"1", "as":"2"}
+
+task = Scp()
+result = task.apply_async(kwargs=ka, queue="axolote", exchange="axolote", routing_key="axolote")
+
+
+        key = kwargs.get('key')
+        password = kwargs.get('password')
+        parameters = kwargs.get('parameters')
+        username = kwargs.get('username')
+        ip = kwargs.get('ip')
+        remotepath = kwargs.get('remotepath')
+        localpath = kwargs.get('localpath')
+
+
+from actions.backup_executors.scp import Scp
+task = Scp()
+result = task.apply_async(queue="axolote", exchange="axolote", routing_key="axolote")
+
+
+from actions.backup_executors.scp import Scp
+task = Scp()
+ka = {
+    "scp_type": "key", 
+    "key": "/home/promero/.ssh/base_image_key", 
+    "password": "password", 
+    "parameters": "-r -o IdentitiesOnly=yes", 
+    "username": "ubuntu",
+    "ip": "10.120.0.172",
+    "remotepath": "/home/ubuntu",
+    "localpath": "/tmp/ubuntu"
+    }
+
+result = task.apply_async(kwargs=ka, queue="axolote", exchange="axolote", routing_key="axolote")
