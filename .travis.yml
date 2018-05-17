@@ -11,6 +11,7 @@ before_install:
   - chmod 400 /home/travis/.ssh/key
 install:
   - pip install -r requirements.pip
-  - nohup ./run.sh &
+  - nohup celery worker --app actions --config celeryconfig.py -E -n 1.%h --loglevel=info &
+  - sleep 5
 script:
   - pytest test.py
