@@ -6,10 +6,10 @@ python:
   - "3.6"
 services: redis
 before_install:
-  - useradd -u 650065 -m -s /bin/bash test
-  - mkdir /home/test/.ssh
-  - echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCdOVWd5rN1Q7UN4jLRrEoQgVYSXHXVX2oIu0RZNpJNaBIov/B8bzqgAv0ueQ6B2+tRDN1FFrtLNTFQDJEDi1azN1MEWGokuyjh8BFKdj/zYIIbTb0BK0LKTb5DZXaqnm+mWuXqf42nAyeU7Re0nvnajYvg3AuZAWq9DZhhG9wSbQ==' > /home/test/.ssh/authorized_key
-  - cp helpers/key /home/test/.ssh/key
+  - mkdir /home/travis/.ssh
+  - echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCdOVWd5rN1Q7UN4jLRrEoQgVYSXHXVX2oIu0RZNpJNaBIov/B8bzqgAv0ueQ6B2+tRDN1FFrtLNTFQDJEDi1azN1MEWGokuyjh8BFKdj/zYIIbTb0BK0LKTb5DZXaqnm+mWuXqf42nAyeU7Re0nvnajYvg3AuZAWq9DZhhG9wSbQ==' > /home/travis/.ssh/authorized_key
+  - cp helpers/key /home/travis/.ssh/key
+  - chmod 400 /home/travis/.ssh/key
 install:
   - pip install -r requirements.txt
   - nohup ./run.sh &
