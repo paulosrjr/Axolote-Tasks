@@ -15,7 +15,7 @@ class TestScp(unittest.TestCase):
         "parameters": "-r -o IdentitiesOnly=yes", 
         "username": "travis",
         "ip": "localhost",
-        "remotepath": "/home/travis",
+        "remotepath": "/home/travis/.ssh",
         "localpath": "/tmp/travis"
         }
 
