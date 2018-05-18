@@ -1,4 +1,5 @@
 import sys
+import os
 from pytest import raises
 import unittest
 from celery.exceptions import Retry
@@ -12,7 +13,7 @@ class TestScp(unittest.TestCase):
         "key": "/home/travis/.ssh/key", 
         "password": "password", 
         "parameters": "-r -o IdentitiesOnly=yes", 
-        "username": "test",
+        "username": "travis",
         "ip": "localhost",
         "remotepath": "/home/travis",
         "localpath": "/tmp/travis"
