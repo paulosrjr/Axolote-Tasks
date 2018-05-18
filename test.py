@@ -13,7 +13,7 @@ class TestScp(unittest.TestCase):
         "password": "password", 
         "parameters": "-r -o IdentitiesOnly=yes", 
         "username": "test",
-        "ip": "127.0.0.1",
+        "ip": "localhost",
         "remotepath": "/home/travis",
         "localpath": "/tmp/travis"
         }
