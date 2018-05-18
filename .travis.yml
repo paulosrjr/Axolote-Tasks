@@ -11,7 +11,7 @@ before_install:
   - cp helpers/key /home/travis/.ssh/key
   - chmod 400 /home/travis/.ssh/key
   - sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication no/g' /etc/ssh/sshd_config
-  - sudo service sshd restart
+  - sudo service ssh restart
 install:
   - pip install -r requirements.pip
   - nohup celery worker --app actions --config celeryconfig.py -E -n 1.%h --loglevel=info &
