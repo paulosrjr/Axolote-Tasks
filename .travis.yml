@@ -11,8 +11,8 @@ before_install:
   - sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication no/g' /etc/ssh/sshd_config
   - sudo service ssh restart
 install:
-  - pip install -r requirements.pip
+  - pip install -r requirements.txt
   - nohup celery worker --app actions --config celeryconfig.py -E -n 1.%h --loglevel=info &
   - sleep 10
 script:
-  - pytest test.py
+  - pytest --cov=./ test.py
