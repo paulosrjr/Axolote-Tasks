@@ -1,7 +1,11 @@
+import os
+
 #broker_url = 'amqp://guest:guest@rabbit:5672//'
-broker_url = 'redis://localhost:6379/0'
+#broker_url = 'redis://localhost:6379/0'
+broker_url = "redis://{}:{}/{}".format(os.getenv('REDIS_HOST', 'localhost'), os.getenv('REDIS_PORT', '6379'), os.getenv('REDIS_DB', '0'))
 #result_backend = 'rpc://guest:guest@rabbitmq:5672//'
-result_backend = 'redis://localhost:6379/0'
+#result_backend = 'redis://localhost:6379/0'
+result_backend = "redis://{}:{}/{}".format(os.getenv('REDIS_HOST', 'localhost'), os.getenv('REDIS_PORT', '6379'), os.getenv('REDIS_DB', '0'))
 #result_backend = 'mongodb://mongo:27017/celery'
 
 #task_serializer = 'json'

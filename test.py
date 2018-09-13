@@ -10,13 +10,13 @@ class TestScp(unittest.TestCase):
     def setUp(self):
         ka = {
         "scp_type": "key", 
-        "key": "/home/runner/.ssh/key", 
+        "key": "/home/travis/.ssh/key",
         "password": "password", 
         "parameters": "-r -o IdentitiesOnly=yes", 
-        "username": "runner",
+        "username": "travis",
         "ip": "localhost",
-        "remotepath": "/home/runner/.ssh",
-        "localpath": "/tmp/runner"
+        "remotepath": "/home/travis/.ssh",
+        "localpath": "/tmp/travis"
         }
 
         scp_task = Scp()

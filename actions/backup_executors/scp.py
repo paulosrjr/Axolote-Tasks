@@ -61,4 +61,5 @@ class Scp(celery_app.Task):
         else:
             raise NotImplementedError()
 
+
 celery_app.register_task(Scp())
