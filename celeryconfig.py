@@ -17,4 +17,5 @@ task_queues = {
 
 include = [
     'actions.backup_executors.scp',
+    'actions.backup_executors.default_test_task'
 ]
