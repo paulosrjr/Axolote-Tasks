@@ -21,5 +21,13 @@ task_queues = {
 }
 
 include = [
-    'actions.backup_executors.scp',
+    'actions.backup_executors.common.scp',
+    'actions.backup_executors.ansible.scp',
 ]
+
+celery_beat_schedule = {
+    'scheduler-task': {
+        'task': 'actions.backup_scheduler.scheduler',
+        'schedule': crontab(minute=*/1)
+    }
+}

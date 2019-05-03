@@ -9,7 +9,7 @@ class Scp(celery_app.Task):
     Execute a SCP Backup
     """
     def __init__(self):
-        self.name = "actions.backup_executors.scp"
+        self.name = "actions.backup_executors.common.scp"
         self.message = ""
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
