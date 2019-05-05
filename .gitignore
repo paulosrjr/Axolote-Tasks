@@ -108,3 +108,6 @@ venv.bak/
 .idea/
 .vscode
 helpers
+axolote_statedb
+sec_axolote_statedb
+*statedb*

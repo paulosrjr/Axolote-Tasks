@@ -1,15 +1,14 @@
 from __future__ import absolute_import, unicode_literals
-from time import sleep
-import sys
 import subprocess
 from actions import celery_app, logger, test_none
 
-class Scp(celery_app.Task):
+
+class Rsync(celery_app.Task):
     """
-    Execute a SCP Backup
+    Execute a Rsync Backup
     """
     def __init__(self):
-        self.name = "actions.backup_executors.common.scp"
+        self.name = "actions.backup_executors.common.rsync"
         self.message = ""
 
     def on_failure(self, exc, task_id, args, kwargs, einfo):
@@ -25,41 +24,7 @@ class Scp(celery_app.Task):
         print('{0!r} finished with: {1!r}'.format(task_id, status))
 
     def run(self, **kwargs):
-        scp_type = kwargs.get('scp_type')
-        key = kwargs.get('key')
-        password = kwargs.get('password')
-        parameters = kwargs.get('parameters')
-        username = kwargs.get('username')
-        ip = kwargs.get('ip')
-        remotepath = kwargs.get('remotepath')
-        localpath = kwargs.get('localpath')
-
-        if scp_type == "password":
-            command = "sshpass -p '{}' scp -o stricthostkeychecking=no {} {}@{}:{} {}".format(
-                password,
-                parameters,
-                username,
-                ip,
-                remotepath,
-                localpath)
-            log = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE)
-            self.message = log.returncode
-            return self.message
-
-        elif scp_type == "key":
-            command = "scp -i {} -o stricthostkeychecking=no {} {}@{}:{} {}".format(
-                key,
-                parameters,
-                username,
-                ip,
-                remotepath,
-                localpath)
-            log = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE)
-            self.message = log.returncode
-            return self.message
-
-        else:
-            raise NotImplementedError()
+        pass
 
 
-celery_app.register_task(Scp())
+celery_app.register_task(Rsync())

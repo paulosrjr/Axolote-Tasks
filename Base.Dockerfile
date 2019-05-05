@@ -1,6 +1,8 @@
 FROM python:3.7.3-slim-stretch
 
-COPY . /opt/axolote
+COPY ./Pipfile /opt/axolote/Pipfile
+
+COPY ./Pipfile.lock /opt/axolote/Pipfile.lock
 
 WORKDIR /opt/axolote
 
