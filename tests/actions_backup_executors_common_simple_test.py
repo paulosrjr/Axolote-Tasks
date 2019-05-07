@@ -3,21 +3,24 @@ import os
 from pytest import raises
 import unittest
 from celery.exceptions import Retry
+
+modules_path = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, modules_path + '/../')
+
 from actions.backup_executors.common.scp import Scp
 
 
 class TestScp(unittest.TestCase):
     def setUp(self):
         ka = {
-        "backup_type": "F",
-        "scp_type": "key", 
+        "scp_type": "key",
         "key": "/home/{}/.ssh/key".format(os.getenv('USER_TEST', 'travis')),
-        "password": "password", 
-        "parameters": "-r -o IdentitiesOnly=yes", 
+        "password": "password",
+        "parameters": "-r -o IdentitiesOnly=yes",
         "username": "{}".format(os.getenv('USER_TEST', 'travis')),
         "host": "localhost",
-        "remote_path": "/home/{}/.ssh".format(os.getenv('USER_TEST', 'travis')),
-        "local_path": "/tmp/scp_test"
+        "remotepath": "/home/{}/.ssh".format(os.getenv('USER_TEST', 'travis')),
+        "localpath": "/tmp/scp_test"
         }
 
         scp_task = Scp()
