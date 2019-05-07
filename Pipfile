@@ -39,6 +39,8 @@ vine = "*"
 Babel = ">=2.5.3"
 PyYAML = "*"
 ansible = "*"
+mock = "*"
+testfixtures = "*"
 
 [requires]
 python_version = "3.7"
