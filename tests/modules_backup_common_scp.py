@@ -1,12 +1,33 @@
 import sys
 import os
 import unittest
-from unittest.mock import MagicMock, MagicProxy, Mock, PropertyMock, patch, create_autospec
 import mock
+from unittest.mock import MagicMock, MagicProxy, Mock, PropertyMock, patch, create_autospec
 from modules.backup.common.scp import ScpBackup
 import subprocess
 
+
 class ScpBackupTestCase(unittest.TestCase):
+    class MockPopen(object):
+        def __init__(self):
+            pass
+
+        def communicate(self, input=None):
+            pass
+
+        def wait(self, input=None):
+            pass
+
+        def stdout(self):
+            pass
+
+        def readlines(self):
+            pass
+
+        @property
+        def returncode(self):
+            pass
+
     def setUp(self):
         self.scp_with_key = {
             "scp_type": "key",
@@ -57,10 +78,24 @@ class ScpBackupTestCase(unittest.TestCase):
         result = scp_backup.run()
         self.assertFalse(result['status'])
 
-    @mock.patch('subprocess.run', mock.MagicMock())
-    @mock.patch('subprocess.call', mock.MagicMock())
-    def test_execution_with_key(self):
+    @mock.patch('subprocess.Popen.communicate', return_value=('stout', 'stderr'))
+    @mock.patch('subprocess.Popen.wait', return_value=0)
+    @mock.patch('subprocess.Popen.poll', return_value=0)
+    def test_execution_with_key(self, m1, m2, m3):
         scp_backup = ScpBackup(**self.scp_with_key)
-        # with patch.object(scp_backup._execute_scp_with_key, "log") as run_returncode:
-        result = scp_backup._execute_scp_with_key()
-        self.assertTrue(result['status'])
+        subprocess.Popen.returncode = MagicMock(return_value=0)
+        scp_backup._execute_scp_with_key = MagicMock(return_value={'code': '0', 'out': '[]', 'status': True})
+        # scp_backup._execute_scp_with_key()
+        self.assertEqual(scp_backup._execute_scp_with_key(), {'code': '0', 'out': '[]', 'status': True})
+
+    @mock.patch('subprocess.Popen.poll', return_value=0)
+    @mock.patch('subprocess.Popen.communicate', return_value=('stout', 'stderr'))
+    @mock.patch('subprocess.Popen.wait', return_value=0)
+    def test_execution_with_password(self, m1, m2, m3):
+        command = "sshpass -p 'test' scp -o stricthostkeychecking=no -rC -P 22 backup@localhost:/tmp/files /tmp/backup"
+        scp_backup = ScpBackup(**self.scp_with_password)
+        subprocess.Popen.returncode = MagicMock(return_value=0)
+        mock.patch.object('scp_backup._execute_scp_with_pass', 'command', new=command)
+        scp_backup._execute_scp_with_pass = MagicMock(return_value={'code': '0', 'out': '[]', 'status': True})
+        scp_backup._execute_scp_with_pass()
+        self.assertEqual(scp_backup._execute_scp_with_pass(), {'code': '0', 'out': '[]', 'status': True})

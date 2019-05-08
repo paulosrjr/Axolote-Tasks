@@ -1,7 +1,7 @@
 language: python
 python:
-  - "3.5"
   - "3.6"
+  - "3.7"
 services: redis
 before_install:
   - sudo apt-get install openssh-client openssh-server
@@ -15,4 +15,4 @@ install:
   - nohup celery worker --app actions --config celeryconfig.py -E -n 1.%h --loglevel=info &
   - sleep 10
 script:
-  - pytest --cov=./ test.py
+  - pytest --cov=./ tests/*

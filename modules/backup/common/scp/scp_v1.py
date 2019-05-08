@@ -28,7 +28,7 @@ class ScpBackup:
     def _message_return(self, log):
         if log.returncode != 0:
             situation_message = {'code': "{}".format(log.returncode),
-                                 'out': "{}".format(str(log.stdout)),
+                                 'out': "{}".format(str(log.stdout.readlines())),
                                  # "args": "{}".format(str(log.args)),
                                  'status': False}
             self._message = situation_message
@@ -36,7 +36,7 @@ class ScpBackup:
             return self._message
         else:
             situation_message = {'code': "{}".format(log.returncode),
-                                 'out': "{}".format(str(log.stdout)),
+                                 'out': "{}".format(str(log.stdout.readlines())),
                                  'status': True}
             self._message = situation_message
             return self._message
@@ -50,7 +50,8 @@ class ScpBackup:
     def _check_sshpass(self):
         print("Check if sshpass exist")
         command = "sshpass"
-        log = subprocess.run(command, shell=True, stdout=self._pipe, stderr=subprocess.STDOUT)
+        log = subprocess.Popen(command, shell=True, stdout=self._pipe, stderr=subprocess.STDOUT)
+        log.wait()
         return True if int(log.returncode) == 0 else False
 
     def _execute_scp_with_key(self):
@@ -62,7 +63,9 @@ class ScpBackup:
             self.host,
             self.remote_path,
             self.local_path)
-        log = subprocess.run(command, shell=True, stdout=self._pipe, stderr=subprocess.STDOUT)
+        log = subprocess.Popen(command, bufsize=2048, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
+                               stdout=subprocess.PIPE, close_fds=True)
+        log.wait()
         log_result = self._message_return(log)
         return log_result
 
@@ -78,7 +81,9 @@ class ScpBackup:
                     self.remote_path,
                     self.local_path)
             print(command)
-            log = subprocess.run(command, shell=True, stdout=self._pipe, stderr=subprocess.STDOUT)
+            log = subprocess.Popen(command, bufsize=2048, shell=True, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE, close_fds=True)
+            log.wait()
             log_result = self._message_return(log)
             return log_result
         else:
