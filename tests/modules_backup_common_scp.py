@@ -8,25 +8,6 @@ import subprocess
 
 
 class ScpBackupTestCase(unittest.TestCase):
-    class MockPopen(object):
-        def __init__(self):
-            pass
-
-        def communicate(self, input=None):
-            pass
-
-        def wait(self, input=None):
-            pass
-
-        def stdout(self):
-            pass
-
-        def readlines(self):
-            pass
-
-        @property
-        def returncode(self):
-            pass
 
     def setUp(self):
         self.scp_with_key = {
@@ -85,7 +66,6 @@ class ScpBackupTestCase(unittest.TestCase):
         scp_backup = ScpBackup(**self.scp_with_key)
         subprocess.Popen.returncode = MagicMock(return_value=0)
         scp_backup._execute_scp_with_key = MagicMock(return_value={'code': '0', 'out': '[]', 'status': True})
-        # scp_backup._execute_scp_with_key()
         self.assertEqual(scp_backup._execute_scp_with_key(), {'code': '0', 'out': '[]', 'status': True})
 
     @mock.patch('subprocess.Popen.poll', return_value=0)
@@ -97,5 +77,5 @@ class ScpBackupTestCase(unittest.TestCase):
         subprocess.Popen.returncode = MagicMock(return_value=0)
         mock.patch.object('scp_backup._execute_scp_with_pass', 'command', new=command)
         scp_backup._execute_scp_with_pass = MagicMock(return_value={'code': '0', 'out': '[]', 'status': True})
-        scp_backup._execute_scp_with_pass()
+        
         self.assertEqual(scp_backup._execute_scp_with_pass(), {'code': '0', 'out': '[]', 'status': True})
