@@ -1,7 +1,7 @@
 language: python
 python:
   - "3.6"
-  - "3.7"
+#  - "3.7"
 services: redis
 before_install:
   - sudo apt-get install openssh-client openssh-server
@@ -10,8 +10,9 @@ before_install:
   - chmod 400 /home/travis/.ssh/key
   - sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication no/g' /etc/ssh/sshd_config
   - sudo service ssh restart
+  - pip install pipenv
 install:
-  - pip install -r requirements.txt
+  - pipenv install --system
   - nohup celery worker --app actions --config celeryconfig.py -E -n 1.%h --loglevel=info &
   - sleep 10
 script:
