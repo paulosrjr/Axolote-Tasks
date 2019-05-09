@@ -6,7 +6,7 @@ services: redis
 before_install:
   - sudo apt-get install openssh-client openssh-server
   - echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCdOVWd5rN1Q7UN4jLRrEoQgVYSXHXVX2oIu0RZNpJNaBIov/B8bzqgAv0ueQ6B2+tRDN1FFrtLNTFQDJEDi1azN1MEWGokuyjh8BFKdj/zYIIbTb0BK0LKTb5DZXaqnm+mWuXqf42nAyeU7Re0nvnajYvg3AuZAWq9DZhhG9wSbQ==' > /home/travis/.ssh/authorized_keys
-  - cp tools/key /home/travis/.ssh/key
+  - cp tools/testing/key /home/travis/.ssh/key
   - chmod 400 /home/travis/.ssh/key
   - sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication no/g' /etc/ssh/sshd_config
   - sudo service ssh restart
